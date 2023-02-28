@@ -1,0 +1,24 @@
+body{
+    margin: 0;
+}
+
+.header{
+    position: fixed;
+
+    height: 15em;
+    width: 100%;
+
+    margin-right: 0;
+    margin-left: 0;
+
+    display: flex;
+
+    .line {
+        margin: auto;
+        border: 0;
+        height: 3px;
+        width: 90%;
+        margin-bottom: 1em;
+        background: #5f5e5e;
+    }
+}
