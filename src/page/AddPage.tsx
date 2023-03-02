@@ -1,5 +1,6 @@
 import React from 'react';
 import {AddHeader} from '../parts/header';
+import "../css/productAdd.scss"
 
 function AddPage() {
   return (
@@ -7,7 +8,6 @@ function AddPage() {
       <AddHeader/>
 
       <div>
-      
       </div>
     </>
   );

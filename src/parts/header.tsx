@@ -3,7 +3,7 @@ import ChangeRoute from '../functions/RouteChanger';
 
 function ListInfo() {
     return (
-        <>
+    <>
         <h1>Product List</h1>
 
         <div className='buttonList'>
@@ -16,13 +16,13 @@ function ListInfo() {
                 MASS DELETE
             </button>
         </div>
-        </>
+    </>
     );
 }
 
 function AddInfo() {
     return (
-        <>
+    <>
         <h1>Product Add</h1>
 
         <div className='buttonList'>
@@ -34,21 +34,24 @@ function AddInfo() {
                 CANCEL
             </button>
         </div>
-        </>
+    </>
     );
 }
 
 function Header(listView : boolean) {
   return (
-    <div className='header'>
-      <div className='verticalBox'>
-        <div className='horizontalBox'>
-        
-            { listView ? <ListInfo/> : <AddInfo/> }
+    <div className='headerSpacing'>
+        <div className='header'>
+            <div className='verticalBox'>
+                <div className='horizontalBox'>
+                
+                    { listView ? <ListInfo/> : <AddInfo/> }
 
+                </div>
+                
+                <div className='line'></div>
+            </div>
         </div>
-        <div className='line'></div>
-      </div>
     </div>
   );
 }

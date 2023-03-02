@@ -10,7 +10,7 @@ function App() {
         <Routes>
             <Route path='/' element={<ListPage />} />
             <Route path='/add-products' element={<AddPage />} />
-        </Routes>=
+        </Routes>
     </Router>
   );
 }
