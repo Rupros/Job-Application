@@ -1,10 +1,15 @@
 import React from 'react';
-import '../css/productList.scss';
-import Header from '../parts/header';
+import { ListHeader } from '../parts/header';
 
 function ListPage() {
   return (
-    Header(true)
+    <>
+      <ListHeader/>
+
+      <div>
+      
+      </div>
+    </>
   );
 }
 

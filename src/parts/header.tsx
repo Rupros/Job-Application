@@ -1,5 +1,4 @@
-import React from 'react';
-import '../css/productList.scss';
+import '../css/header.scss';
 import ChangeRoute from '../functions/RouteChanger';
 
 function ListInfo() {
@@ -54,4 +53,14 @@ function Header(listView : boolean) {
   );
 }
 
-export default Header;
+export function ListHeader() {
+    return (
+        Header(true)
+    )
+}
+
+export function AddHeader() {
+    return (
+        Header(false)
+    )
+}
