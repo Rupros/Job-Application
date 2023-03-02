@@ -30,8 +30,8 @@ function AddInfo() {
             <button>
                 SAVE
             </button>
-            
-            <button>
+
+            <button onClick={ChangeRoute("/")}>
                 CANCEL
             </button>
         </div>
