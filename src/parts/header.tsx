@@ -1,7 +1,6 @@
 import '../css/header.scss';
 import ChangeRoute from '../functions/RouteChanger';
 import config from '../config';
-import Validate from '../functions/Validator';
 
 function ListInfo() {
     return (
@@ -41,8 +40,6 @@ function AddInfo() {
 }
 
 function SubmitForm(){
-    if(!Validate()) return;
-
     const form = document.getElementById("#product_form") as HTMLFormElement;
     form.submit();
 }

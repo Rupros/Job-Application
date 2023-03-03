@@ -1,36 +1,40 @@
 import React, { ChangeEvent, useState } from 'react';
 import "../css/productAdd.scss"
 import { FormTypes } from '../types/FormTypes';
-import { FormValues } from '../types/FormTypes';
 
-const forms: FormTypes = {
-    "dvd": DvdForm(),
-    "book": BookForm(),
-    "furniture": FurnitureForm(),
+
+function GetForm(form: string, handleChange: void) {
+    const forms: FormTypes = {
+        "dvd": <DvdForm handleChange={handleChange}/>,
+        "book": <BookForm handleChange={handleChange}/>,
+        "furniture": <FurnitureForm handleChange={handleChange}/>,
+    }
+
+    return forms[form];
 }
 
-function InputFields(){
+function InputFields({handleChange}: { handleChange: any }) {
     return (
         <div className='box'>
             <div>
             <label>SKU</label>
-            <input name='sku' type="text" id='#sku'/>
+            <input name='sku' type="text" id='#sku' onChange={handleChange}/>
             </div>
 
             <div>
             <label>Name</label>
-            <input name='name' type="text" id='#name'/>
+            <input name='name' type="text" id='#name' onChange={handleChange}/>
             </div>
 
             <div>
             <label>Price ($)</label>
-            <input name='price' type="number" id='#price'/>
+            <input name='price' type="number" id='#price' onChange={handleChange}/>
             </div>
         </div>
     );
 }
 
-function DvdForm() {
+function DvdForm({handleChange}: { handleChange: any }) {
     return (
         <>
         <div>
@@ -39,13 +43,13 @@ function DvdForm() {
 
         <div>
             <label>Size (MB)</label>
-            <input name='size' type="number" id='#size'/>
+            <input name='size' type="number" id='#size' onChange={handleChange}/>
         </div>
         </>
     );
 }
 
-function BookForm() {
+function BookForm({handleChange}: { handleChange: any }) {
     return (
         <>
         <div>
@@ -54,13 +58,13 @@ function BookForm() {
 
         <div>
             <label>Weight (KG)</label>
-            <input name='weight' type="number" id='#weight'/>
+            <input name='weight' type="number" id='#weight' onChange={handleChange}/>
         </div>
         </>
     );
 }
 
-function FurnitureForm() {
+function FurnitureForm({handleChange}: { handleChange: any }) {
     return (
         <>
         <div>
@@ -69,23 +73,23 @@ function FurnitureForm() {
 
         <div>
             <label>Height (CM)</label>
-            <input name='height' type="number" id='#height'/>
+            <input name='height' type="number" id='#height' onChange={handleChange}/>
         </div>
 
         <div>
             <label>Width (CM)</label>
-            <input name='width' type="number" id='#width'/>
+            <input name='width' type="number" id='#width' onChange={handleChange}/>
         </div>
 
         <div>
             <label>Length (CM)</label>
-            <input name='length' type="number" id='#length'/>
+            <input name='length' type="number" id='#length' onChange={handleChange}/>
         </div>
         </>
     );
 }
 
-function FormType() {
+function FormType({handleChange}: { handleChange: any }) {
     const [formType, setFormType] = useState<string>("dvd") ;
 
     return (
@@ -93,7 +97,7 @@ function FormType() {
             <div className='box'>
                 <label>Type:</label>
     
-                <select name="types" id="#productType" onChange={(e) => setFormType(e.target.value)}>
+                <select name="type" id="#productType" onChange={(e) => setFormType(e.target.value)}>
                     <option value="dvd">DVD</option>
                     <option value="book">Book</option>
                     <option value="furniture">Furniture</option>
@@ -101,18 +105,31 @@ function FormType() {
             </div>
 
             <div className='box'>
-                { forms[formType] }
+                { GetForm(formType, handleChange) }
             </div>
         </>
     );
 }
 
 function Form() {
+    const initial = {
+        "sku": '', "name": '', "price": '',
+        "size": '',
+        "weight": '',
+        "height": '', "width": '', "length": ''}
+
+    const [values, setValues] = useState(initial);
+    const handleChange = (e: ChangeEvent) => {
+        const {name, value} = e.target as HTMLInputElement;
+        setValues({...values, [name]: value})
+        console.log(values);
+    }
+
     return (
         <>
             <form id='#product_form' onSubmit={handleSubmit}>
-                <InputFields/>
-                <FormType/>
+                <InputFields handleChange={handleChange}/>
+                <FormType handleChange={handleChange}/>
             </form>
         </>
     );
@@ -120,6 +137,8 @@ function Form() {
 
 const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    console.log(e.target);
 }
 
 export default Form;
