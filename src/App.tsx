@@ -4,12 +4,14 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import AddPage from './page/AddPage';
 import ListPage from './page/ListPage';
 
+import config from './config';
+
 function App() {
   return (
     <Router>
         <Routes>
-            <Route path='/' element={<ListPage />} />
-            <Route path='/add-products' element={<AddPage />} />
+            <Route path={config.listPath} element={<ListPage />} />
+            <Route path={config.addPath}  element={<AddPage />} />
         </Routes>
     </Router>
   );

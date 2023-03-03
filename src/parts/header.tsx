@@ -1,5 +1,6 @@
 import '../css/header.scss';
 import ChangeRoute from '../functions/RouteChanger';
+import config from '../config';
 
 function ListInfo() {
     return (
@@ -8,7 +9,7 @@ function ListInfo() {
 
         <div className='buttonList'>
        
-            <button onClick={ChangeRoute("/add-products")}>
+            <button onClick={ChangeRoute(config.addPath)}>
                 ADD
             </button>
 
@@ -30,7 +31,7 @@ function AddInfo() {
                 SAVE
             </button>
 
-            <button onClick={ChangeRoute("/")}>
+            <button onClick={ChangeRoute(config.listPath)}>
                 CANCEL
             </button>
         </div>
