@@ -1,9 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
 import "../css/productAdd.scss"
-import { FormTypes } from '../types/FormTypes';
+import { FormTypes, FormValidators, Values } from '../types/FormTypes';
+import axios from 'axios';
+import { ValidatedBasics, GetValidator } from '../functions/Validators';
 
 
-function GetForm(form: string, handleChange: void) {
+function GetForm(form: string, handleChange: any) {
     const forms: FormTypes = {
         "dvd": <DvdForm handleChange={handleChange}/>,
         "book": <BookForm handleChange={handleChange}/>,
@@ -89,30 +91,8 @@ function FurnitureForm({handleChange}: { handleChange: any }) {
     );
 }
 
-function FormType({handleChange}: { handleChange: any }) {
-    const [formType, setFormType] = useState<string>("dvd") ;
-
-    return (
-        <>
-            <div className='box'>
-                <label>Type:</label>
-    
-                <select name="type" id="#productType" onChange={(e) => setFormType(e.target.value)}>
-                    <option value="dvd">DVD</option>
-                    <option value="book">Book</option>
-                    <option value="furniture">Furniture</option>
-                </select> 
-            </div>
-
-            <div className='box'>
-                { GetForm(formType, handleChange) }
-            </div>
-        </>
-    );
-}
-
 function Form() {
-    const initial = {
+    const initial: Values = {
         "sku": '', "name": '', "price": '',
         "size": '',
         "weight": '',
@@ -125,18 +105,50 @@ function Form() {
         console.log(values);
     }
 
+    const [formType, setFormType] = useState<string>("dvd") ;
+
+    const submit = document.getElementById("submit") as HTMLButtonElement;
+    if(submit) {
+        submit.onclick = () => {
+            if(!ValidatedBasics(values)) return;
+            if(!GetValidator(formType, values)) return;
+
+            console.log("validated")
+
+            const url = `https://localhost/add_${formType}.php`;
+
+            let formData = new FormData();
+            formData.append("sku", values.sku);
+            formData.append("name", values.name);
+            formData.append("price", values.price);
+
+            axios.post(url, formData)
+            .then (response => alert(response.data))
+            .catch(error => alert(error));
+        }
+    }
+
     return (
         <>
-            <form action="../../backend/add_item.php" id='#product_form' onSubmit={handleSubmit}>
+            <div id='#product_form' className='productForm'>
                 <InputFields handleChange={handleChange}/>
-                <FormType handleChange={handleChange}/>
-            </form>
+
+                <div className='box'>
+                    <label>Type:</label>
+        
+                    <select name="type" id="#productType" onChange={(e) => setFormType(e.target.value)}>
+                        <option value="dvd">DVD</option>
+                        <option value="book">Book</option>
+                        <option value="furniture">Furniture</option>
+                    </select> 
+                </div>
+
+                <div className='box'>
+                    { GetForm(formType, handleChange) }
+                </div>
+            </div>
         </>
     );
-}
-
-const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
 }
 
 export default Form;

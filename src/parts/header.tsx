@@ -27,7 +27,7 @@ function AddInfo() {
         <h1>Product Add</h1>
 
         <div className='buttonList'>
-            <button onClick={SubmitForm}>
+            <button id='submit'>
                 SAVE
             </button>
 
@@ -37,11 +37,6 @@ function AddInfo() {
         </div>
     </>
     );
-}
-
-function SubmitForm(){
-    const form = document.getElementById("#product_form") as HTMLFormElement;
-    form.submit();
 }
 
 function Header(listView : boolean) {
