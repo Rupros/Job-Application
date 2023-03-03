@@ -1,5 +1,9 @@
 ## Available Scripts
 
+A MySql server is required. Queries for setting it up are found under [/backend/queries].
+
+## Available Scripts
+
 In the project directory, you can run:
 
 ### `npm start`

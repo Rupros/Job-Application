@@ -127,7 +127,7 @@ function Form() {
 
     return (
         <>
-            <form id='#product_form' onSubmit={handleSubmit}>
+            <form action="../../backend/add_item.php" id='#product_form' onSubmit={handleSubmit}>
                 <InputFields handleChange={handleChange}/>
                 <FormType handleChange={handleChange}/>
             </form>
@@ -137,8 +137,6 @@ function Form() {
 
 const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log(e.target);
 }
 
 export default Form;
