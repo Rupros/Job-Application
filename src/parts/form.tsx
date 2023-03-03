@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import "../css/productAdd.scss"
 import { FormTypes } from '../types/FormTypes';
+import { FormValues } from '../types/FormTypes';
 
 const forms: FormTypes = {
     "dvd": DvdForm(),
@@ -13,17 +14,17 @@ function InputFields(){
         <div className='box'>
             <div>
             <label>SKU</label>
-            <input type="text" id='#sku'/>
+            <input name='sku' type="text" id='#sku'/>
             </div>
 
             <div>
             <label>Name</label>
-            <input type="text" id='#name'/>
+            <input name='name' type="text" id='#name'/>
             </div>
 
             <div>
             <label>Price ($)</label>
-            <input type="number" id='#price'/>
+            <input name='price' type="number" id='#price'/>
             </div>
         </div>
     );
@@ -31,21 +32,55 @@ function InputFields(){
 
 function DvdForm() {
     return (
-        <> dvd
+        <>
+        <div>
+            Please provide DVD size in MB
+        </div>
+
+        <div>
+            <label>Size (MB)</label>
+            <input name='size' type="number" id='#size'/>
+        </div>
         </>
     );
 }
 
 function BookForm() {
     return (
-        <> book
+        <>
+        <div>
+            Please provide weight in KG
+        </div>
+
+        <div>
+            <label>Weight (KG)</label>
+            <input name='weight' type="number" id='#weight'/>
+        </div>
         </>
     );
 }
 
 function FurnitureForm() {
     return (
-        <> furniture
+        <>
+        <div>
+            Please provide furniture's height, width and length in CM
+        </div>
+
+        <div>
+            <label>Height (CM)</label>
+            <input name='height' type="number" id='#height'/>
+        </div>
+
+        <div>
+            <label>Width (CM)</label>
+            <input name='width' type="number" id='#width'/>
+        </div>
+
+        <div>
+            <label>Length (CM)</label>
+            <input name='length' type="number" id='#length'/>
+        </div>
         </>
     );
 }
@@ -66,7 +101,7 @@ function FormType() {
             </div>
 
             <div className='box'>
-                {forms[formType]}
+                { forms[formType] }
             </div>
         </>
     );
@@ -75,12 +110,16 @@ function FormType() {
 function Form() {
     return (
         <>
-            <form id='#product_form' action='/add_item.php'>
+            <form id='#product_form' onSubmit={handleSubmit}>
                 <InputFields/>
                 <FormType/>
             </form>
         </>
     );
+}
+
+const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 }
 
 export default Form;

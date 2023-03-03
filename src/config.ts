@@ -2,7 +2,7 @@ import { ConfigType } from "./types/Config";
 
 const config: ConfigType = {
     listPath: "/",
-    addPath: "/add-prduct"
+    addPath: "/add-product"
 }
 
 export default config;

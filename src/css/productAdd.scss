@@ -41,22 +41,6 @@ form {
                 width: 10em;
                 text-align: left;
             }
-
-            input {
-                width: 30em;
-
-                border-color: black;
-                border-style:solid;
-
-                font-weight: bold;
-                font-family: inherit;
-                letter-spacing: 0.1em;
-                text-align: center;
-            }
-
-            input:focus {
-                outline: none;
-            }
         }
     }
 }
@@ -76,4 +60,22 @@ select {
 
     text-align: center;
     width: 10em;
+
+    cursor: pointer;
+}
+
+input {
+    width: 30em;
+
+    border-color: black;
+    border-style:solid;
+
+    font-weight: bold;
+    font-family: inherit;
+    letter-spacing: 0.1em;
+    text-align: center;
+}
+
+input:focus {
+    outline: none;
 }
