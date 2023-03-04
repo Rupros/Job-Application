@@ -58,7 +58,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
     //insert it in db
     $insertSql = $conn->prepare("
     INSERT INTO furnitures (id, length, width, height) 
-    values (?, ?)");
+    values (?, ?, ?, ?)");
     $insertSql->execute([$id, $length, $width, $height]);
 
 
