@@ -4,6 +4,7 @@ import { FormTypes, Values } from '../types/FormTypes';
 import ValidateForm from '../functions/Validators';
 import axios from 'axios';
 import ChangeRoute from '../functions/RouteChanger';
+import config from '../config';
 
 function GetForm(form: string, handleChange: any) {
     const forms: FormTypes = {
@@ -98,7 +99,8 @@ function Form() {
         "sku": "", "name": "", "price": "",
         "size": "",
         "weight": "",
-        "height": "", "width": "", "length": ""}
+        "height": "", "width": "", "length": ""
+    }
 
     const [values, setValues] = useState(initial);
     const handleChange = (e: ChangeEvent) => {
@@ -113,30 +115,28 @@ function Form() {
         submit.onclick = () => {
             if (!ValidateForm(formType, values, setError)) return;
             setError("");
-            console.log("validated");
 
-            const form = document.getElementById("product_form") as HTMLFormElement;
-            form.submit();
-
-            console.log("submitted");
+            handleSubmit();
+            const returnToList = ChangeRoute(config.listPath);
+            returnToList();
         }
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
+    const handleSubmit = () => {
         const url = `http://localhost/php-react/Job_Application/add_${formType}.php`;
-        axios.post(url, values)
+        const formData = GetFormData(values, formType);
+        
+        axios.post(url, formData)
         .then((res) => {
             console.log(res)
-        }, function (e)  {
-            alert("Error submitting form!");
+        }, (error) =>  {
+            alert(`Error submitting form! \n ${error}`);
         });
     }
 
     return (
         <>
-            <form id='product_form' onSubmit={(e) => handleSubmit(e)}>
+            <form id='product_form'>
                 <InputFields handleChange={handleChange}/>
 
                 <div className='box'>
@@ -159,6 +159,32 @@ function Form() {
             </form>
         </>
     );
+}
+
+function GetFormData(values: Values, formType: string) {
+    const formData = {
+        type: formType,
+        sku: values.sku, name: values.name, price: values.price,
+        size: values.size,
+        weight: values.weight,
+        height: values.height, width: values.width, length: values.length
+    }
+
+    return formData;
+}
+
+function ClearFields() {
+    (document.getElementById("sku") as HTMLInputElement).value = "";
+    (document.getElementById("name") as HTMLInputElement).value = "";
+    (document.getElementById("price") as HTMLInputElement).value = "";
+
+    (document.getElementById("size") as HTMLInputElement).value = "";
+
+    (document.getElementById("weight") as HTMLInputElement).value = "";
+
+    (document.getElementById("length") as HTMLInputElement).value = "";
+    (document.getElementById("width") as HTMLInputElement).value = "";
+    (document.getElementById("height") as HTMLInputElement).value = "";
 }
 
 export default Form;

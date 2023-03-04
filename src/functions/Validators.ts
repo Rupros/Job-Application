@@ -27,8 +27,6 @@ function ValidatedBasics(setError: any) {
     const name = document.getElementById("name") as HTMLInputElement;
     const price = document.getElementById("price") as HTMLInputElement;
 
-    console.log(price.value)
-
     if (sku.value == "") {
         setError("Please fill in the sku information");
         basicsValidated = false;

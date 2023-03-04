@@ -1,6 +1,12 @@
 ## Requirements
 
-A MySql server is required. Queries for setting it up are found under [/backend/queries].
+A XAMPP server is required, running with Apache and MySql. Queries for setting it up are found under [/backend/queries].
+
+XAMPP folder should have these underfolders containing every backend php file in them [htdocs\php-react\Job_Application].
+
+PhpMyAdmin is being used.
+
+
 
 ## Available Scripts
 
