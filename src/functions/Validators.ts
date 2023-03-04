@@ -3,31 +3,33 @@ import { FormValidators, Values } from "../types/FormTypes";
 export default function ValidateForm(form: string, values: Values, setError: any) {
     let validated =  true;
 
-    if (!ValidatedBasics(values, setError)) validated = false;
-    if (!GetValidator(form, values, setError)) validated = false;
+    if (!ValidatedBasics(setError)) validated = false;
+    if (!GetValidator(form, setError)) validated = false;
 
     return validated;
 }
 
-function GetValidator(form: string, values: Values, setError: any) {
+function GetValidator(form: string, setError: any) {
 
     const validators: FormValidators = {
-        "dvd": ValidatedDvd(form, values, setError),
-        "book": ValidatedBook(form, values, setError),
-        "furniture": ValidatedFurniture(form, values, setError),
+        "dvd": ValidatedDvd(form, setError),
+        "book": ValidatedBook(form, setError),
+        "furniture": ValidatedFurniture(form, setError),
     }
     
     return validators[form];
 }
 
-function ValidatedBasics(values: Values, setError: any) {
+function ValidatedBasics(setError: any) {
     let basicsValidated = true;
 
     const sku = document.getElementById("sku") as HTMLInputElement;
     const name = document.getElementById("name") as HTMLInputElement;
     const price = document.getElementById("price") as HTMLInputElement;
 
-    if (values.sku == null) {
+    console.log(price.value)
+
+    if (sku.value == "") {
         setError("Please fill in the sku information");
         basicsValidated = false;
         SetValidatedField(sku, false)
@@ -36,7 +38,7 @@ function ValidatedBasics(values: Values, setError: any) {
         SetValidatedField(sku, true)
     }
 
-    if (values.name == null) {
+    if (name.value == "") {
         setError("Please fill in the name information");
         basicsValidated = false;
         SetValidatedField(name, false)
@@ -45,13 +47,13 @@ function ValidatedBasics(values: Values, setError: any) {
         SetValidatedField(name, true)
     }
 
-    if (values.price == null) {
+    if (price.value == "") {
         setError("Please fill in the price information");
         basicsValidated = false;
         SetValidatedField(price, false)
     }
-    else if (values.price.value == "") {
-        setError("Please fill in correct type");
+    else if (!IsNumber(price.value)) {
+        setError("Please fill the price with only numbers");
         basicsValidated = false;
         SetValidatedField(price, false)
     }
@@ -62,22 +64,21 @@ function ValidatedBasics(values: Values, setError: any) {
     return basicsValidated;
 }
 
-function ValidatedDvd(form: string, values: Values, setError: any) {
+function ValidatedDvd(form: string, setError: any) {
     if(form !== "dvd") return true;
 
     const size = document.getElementById("size") as HTMLInputElement;
 
-    if (values.size == null) {
+    if (size.value == "") {
         SetValidatedField(size, false);
 
         setError("Please fill in the dvd size field");
         return false;
     }
-
-    if (values.size.value == "") {
+    else if (!IsNumber(size.value)) {
         SetValidatedField(size, false);
 
-        setError("Please fill in correct type");
+        setError("Please fill the size with only numbers");
         return false;
     }
 
@@ -87,22 +88,21 @@ function ValidatedDvd(form: string, values: Values, setError: any) {
     return true;
 }
 
-function ValidatedBook(form: string, values: Values, setError: any) {
+function ValidatedBook(form: string, setError: any) {
     if(form !== "book") return true;
 
     const weight = document.getElementById("weight") as HTMLInputElement;
 
-    if (values.weight == null) {
+    if (weight.value == "") {
         SetValidatedField(weight, false);
 
-        setError("Please fill in the dvd size field");
+        setError("Please fill in the book weight field");
         return false;
     }
-
-    if (values.weight.value == "") {
+    else if (!IsNumber(weight.value)) {
         SetValidatedField(weight, false);
 
-        setError("Please fill in correct type");
+        setError("Please fill the weight with only numbers");
         return false;
     }
 
@@ -112,7 +112,7 @@ function ValidatedBook(form: string, values: Values, setError: any) {
     return true;
 }
 
-function ValidatedFurniture(form: string, values: Values, setError: any) {
+function ValidatedFurniture(form: string, setError: any) {
     if(form !== "furniture") return true;
 
     let basicsValidated = true;
@@ -121,31 +121,43 @@ function ValidatedFurniture(form: string, values: Values, setError: any) {
     const width = document.getElementById("width") as HTMLInputElement;
     const length = document.getElementById("length") as HTMLInputElement;
 
-    if (values.height == null) {
-        setError("Please fill in the dimensions");
+    if (height.value == "") {
+        setError("Please fill in the height");
+        basicsValidated = false;
+        SetValidatedField(height, false)
+    }
+    else if (!IsNumber(height.value)) {
+        setError("Please fill the height with only numbers");
         basicsValidated = false;
         SetValidatedField(height, false)
     }
     else {
         SetValidatedField(height, true)
     }
+       
 
-    if (values.width == null) {
-        setError("Please fill in the dimensions");
+    if (width.value == "") {
+        setError("Please fill in the width");
+        basicsValidated = false;
+        SetValidatedField(width, false)
+    }
+    else if (!IsNumber(width.value)) {
+        setError("Please fill the width with only numbers");
         basicsValidated = false;
         SetValidatedField(width, false)
     }
     else {
         SetValidatedField(width, true)
     }
+       
 
-    if (values.length == null) {
-        setError("Please fill in the dimensions");
+    if (length.value == "") {
+        setError("Please fill in the length");
         basicsValidated = false;
         SetValidatedField(length, false)
     }
-    else if (values.length.value == "") {
-        setError("Please fill in the dimensions");
+    else if (!IsNumber(length.value)) {
+        setError("Please fill the length with only numbers");
         basicsValidated = false;
         SetValidatedField(length, false)
     }
@@ -163,4 +175,8 @@ function SetValidatedField (field: HTMLElement, validated: boolean) {
     else {
         field.style.borderColor = "red";
     }
+}
+
+function IsNumber (value: string){
+    return /^\d+$/.test(value);
 }

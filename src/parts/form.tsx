@@ -2,7 +2,8 @@ import React, { ChangeEvent, useState } from 'react';
 import "../css/productAdd.scss"
 import { FormTypes, Values } from '../types/FormTypes';
 import ValidateForm from '../functions/Validators';
-
+import axios from 'axios';
+import ChangeRoute from '../functions/RouteChanger';
 
 function GetForm(form: string, handleChange: any) {
     const forms: FormTypes = {
@@ -29,7 +30,7 @@ function InputFields({handleChange}: { handleChange: any }) {
 
             <div>
             <label>Price ($)</label>
-            <input name='price' type="number" id='price' onChange={handleChange}/>
+            <input name='price' type="text" id='price' onChange={handleChange}/>
             </div>
         </div>
     );
@@ -44,7 +45,7 @@ function DvdForm({handleChange}: { handleChange: any }) {
 
         <div>
             <label>Size (MB)</label>
-            <input name='size' type="number" id='size' onChange={handleChange}/>
+            <input name='size' type="text" id='size' onChange={handleChange}/>
         </div>
         </>
     );
@@ -59,7 +60,7 @@ function BookForm({handleChange}: { handleChange: any }) {
 
         <div>
             <label>Weight (KG)</label>
-            <input name='weight' type="number" id='weight' onChange={handleChange}/>
+            <input name='weight' type="text" id='weight' onChange={handleChange}/>
         </div>
         </>
     );
@@ -74,17 +75,17 @@ function FurnitureForm({handleChange}: { handleChange: any }) {
 
         <div>
             <label>Height (CM)</label>
-            <input name='height' type="number" id='height' onChange={handleChange}/>
+            <input name='height' type="text" id='height' onChange={handleChange}/>
         </div>
 
         <div>
             <label>Width (CM)</label>
-            <input name='width' type="number" id='width' onChange={handleChange}/>
+            <input name='width' type="text" id='width' onChange={handleChange}/>
         </div>
 
         <div>
             <label>Length (CM)</label>
-            <input name='length' type="number" id='length' onChange={handleChange}/>
+            <input name='length' type="text" id='length' onChange={handleChange}/>
         </div>
         </>
     );
@@ -94,15 +95,15 @@ function Form() {
     const [error, setError] = useState("");
 
     const initial: Values = {
-        "sku": null, "name": null, "price": null,
-        "size": null,
-        "weight": null,
-        "height": null, "width": null, "length": null}
+        "sku": "", "name": "", "price": "",
+        "size": "",
+        "weight": "",
+        "height": "", "width": "", "length": ""}
 
     const [values, setValues] = useState(initial);
     const handleChange = (e: ChangeEvent) => {
         const target = e.target as HTMLInputElement;
-        setValues({...values, [target.name]: target.value.length > 0 ? target : null})
+        setValues({...values, [target.name]: target.value})
     }
 
     const [formType, setFormType] = useState<string>("dvd") ;
@@ -112,21 +113,30 @@ function Form() {
         submit.onclick = () => {
             if (!ValidateForm(formType, values, setError)) return;
             setError("");
-            
             console.log("validated");
+
             const form = document.getElementById("product_form") as HTMLFormElement;
             form.submit();
+
+            console.log("submitted");
         }
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log("submitted");
+
+        const url = `http://localhost/php-react/Job_Application/add_${formType}.php`;
+        axios.post(url, values)
+        .then((res) => {
+            console.log(res)
+        }, function (e)  {
+            alert("Error submitting form!");
+        });
     }
 
     return (
         <>
-            <form method='POST' id='product_form' action={`add_${formType}.php`} onSubmit={(e) => handleSubmit(e)}>
+            <form id='product_form' onSubmit={(e) => handleSubmit(e)}>
                 <InputFields handleChange={handleChange}/>
 
                 <div className='box'>

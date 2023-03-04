@@ -27,7 +27,7 @@ function AddInfo() {
         <h1>Product Add</h1>
 
         <div className='buttonList'>
-            <button id='submit'>
+            <button type='submit' id='submit'>
                 SAVE
             </button>
 
