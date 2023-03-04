@@ -93,6 +93,8 @@ function FurnitureForm({handleChange}: { handleChange: any }) {
 }
 
 function Form() {
+    const  returnToList = ChangeRoute(config.listPath);
+
     const [error, setError] = useState("");
 
     const initial: Values = {
@@ -117,7 +119,6 @@ function Form() {
             setError("");
 
             handleSubmit();
-            const returnToList = ChangeRoute(config.listPath);
             returnToList();
         }
     }
@@ -171,20 +172,6 @@ function GetFormData(values: Values, formType: string) {
     }
 
     return formData;
-}
-
-function ClearFields() {
-    (document.getElementById("sku") as HTMLInputElement).value = "";
-    (document.getElementById("name") as HTMLInputElement).value = "";
-    (document.getElementById("price") as HTMLInputElement).value = "";
-
-    (document.getElementById("size") as HTMLInputElement).value = "";
-
-    (document.getElementById("weight") as HTMLInputElement).value = "";
-
-    (document.getElementById("length") as HTMLInputElement).value = "";
-    (document.getElementById("width") as HTMLInputElement).value = "";
-    (document.getElementById("height") as HTMLInputElement).value = "";
 }
 
 export default Form;
