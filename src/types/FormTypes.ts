@@ -7,8 +7,8 @@ export interface FormValidators {
 }
 
 export interface Values {
-        "sku": string, "name": string, "price":string,
-        "size": string,
-        "weight": string,
-        "height": string, "width": string, "length": string
+        "sku": HTMLInputElement | null, "name": HTMLInputElement | null, "price": HTMLInputElement | null,
+        "size": HTMLInputElement | null,
+        "weight": HTMLInputElement | null,
+        "height": HTMLInputElement | null, "width": HTMLInputElement | null, "length": HTMLInputElement | null
 }

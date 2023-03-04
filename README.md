@@ -1,4 +1,4 @@
-## Available Scripts
+## Requirements
 
 A MySql server is required. Queries for setting it up are found under [/backend/queries].
 
