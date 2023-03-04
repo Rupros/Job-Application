@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import "../css/productAdd.scss"
 import { FormTypes, Values } from '../types/FormTypes';
-import axios from 'axios';
 import ValidateForm from '../functions/Validators';
 
 
@@ -20,17 +19,17 @@ function InputFields({handleChange}: { handleChange: any }) {
         <div className='box'>
             <div>
             <label>SKU</label>
-            <input type="text" id='sku' onChange={handleChange}/>
+            <input name='sku' type="text" id='sku' onChange={handleChange}/>
             </div>
 
             <div>
             <label>Name</label>
-            <input type="text" id='name' onChange={handleChange}/>
+            <input name='name' type="text" id='name' onChange={handleChange}/>
             </div>
 
             <div>
             <label>Price ($)</label>
-            <input type="number" id='price' onChange={handleChange}/>
+            <input name='price' type="number" id='price' onChange={handleChange}/>
             </div>
         </div>
     );
@@ -45,7 +44,7 @@ function DvdForm({handleChange}: { handleChange: any }) {
 
         <div>
             <label>Size (MB)</label>
-            <input type="number" id='size' onChange={handleChange}/>
+            <input name='size' type="number" id='size' onChange={handleChange}/>
         </div>
         </>
     );
@@ -60,7 +59,7 @@ function BookForm({handleChange}: { handleChange: any }) {
 
         <div>
             <label>Weight (KG)</label>
-            <input type="number" id='weight' onChange={handleChange}/>
+            <input name='weight' type="number" id='weight' onChange={handleChange}/>
         </div>
         </>
     );
@@ -75,17 +74,17 @@ function FurnitureForm({handleChange}: { handleChange: any }) {
 
         <div>
             <label>Height (CM)</label>
-            <input type="number" id='height' onChange={handleChange}/>
+            <input name='height' type="number" id='height' onChange={handleChange}/>
         </div>
 
         <div>
             <label>Width (CM)</label>
-            <input type="number" id='width' onChange={handleChange}/>
+            <input name='width' type="number" id='width' onChange={handleChange}/>
         </div>
 
         <div>
             <label>Length (CM)</label>
-            <input type="number" id='length' onChange={handleChange}/>
+            <input name='length' type="number" id='length' onChange={handleChange}/>
         </div>
         </>
     );
@@ -103,7 +102,7 @@ function Form() {
     const [values, setValues] = useState(initial);
     const handleChange = (e: ChangeEvent) => {
         const target = e.target as HTMLInputElement;
-        setValues({...values, [target.id]: target.value.length > 0 ? target : null})
+        setValues({...values, [target.name]: target.value.length > 0 ? target : null})
     }
 
     const [formType, setFormType] = useState<string>("dvd") ;
@@ -115,21 +114,19 @@ function Form() {
             setError("");
             
             console.log("validated");
-
-            const url = `https://localhost/add_${formType}.php`;
-
-            let formData = new FormData();
-
-
-            axios.post(url, formData)
-            .then (response => alert(response.data))
-            .catch(error => alert(error));
+            const form = document.getElementById("product_form") as HTMLFormElement;
+            form.submit();
         }
+    }
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log("submitted");
     }
 
     return (
         <>
-            <div id='product_form' className='productForm'>
+            <form method='POST' id='product_form' action={`add_${formType}.php`} onSubmit={(e) => handleSubmit(e)}>
                 <InputFields handleChange={handleChange}/>
 
                 <div className='box'>
@@ -149,7 +146,7 @@ function Form() {
                 <div className='errorMsg'>
                     {error}
                 </div>
-            </div>
+            </form>
         </>
     );
 }

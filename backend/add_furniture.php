@@ -3,7 +3,7 @@
     $name =$_POST["name"];
     $price =$_POST["price"];
 
-    $weight =$_POST["length"];
-    $weight =$_POST["width"];
-    $weight =$_POST["height"];
+    $length =$_POST["length"];
+    $width =$_POST["width"];
+    $height =$_POST["height"];
 ?>
