@@ -17,23 +17,16 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
         die("Connection failed: " . $conn->connect_error);
     }
 
-    //get dvds
-    $getDvdsSql = $conn->prepare("
-    SELECT sku, name, price, weight, length, width, height FROM items
-    LEFT JOIN dvds ON items.id = dvds.id
-    LEFT JOIN books ON items.id = books.id
-    LEFT JOIN furnitures ON items.id = furnitures.id
-    ORDER BY items.id
-    ");
-    $getDvdsSql->execute();
+    $sql = "
+        TRUNCATE TABLE items;
+        TRUNCATE TABLE dvds;
+        TRUNCATE TABLE books;
+        TRUNCATE TABLE furnitures;
+        ";
 
-    $result = $getDvdsSql->get_result();
-
-    echo '[';
-    for ($i = 0 ; $i < mysqli_num_rows($result) ; $i++) {
-        echo ($i > 0 ? ',' : '').json_encode(mysqli_fetch_object($result));
-    }
-    echo ']';
+    $conn->multi_query($sql);
 
     $conn->close();
+
+    echo("Deleted data");
 ?>

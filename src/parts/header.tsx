@@ -1,6 +1,7 @@
 import '../css/header.scss';
 import ChangeRoute from '../functions/RouteChanger';
 import config from '../config';
+import MassDelete from '../functions/MassDelete';
 
 function ListInfo() {
     return (
@@ -13,7 +14,7 @@ function ListInfo() {
                 ADD
             </button>
 
-            <button>
+            <button onClick={MassDelete}>
                 MASS DELETE
             </button>
         </div>
