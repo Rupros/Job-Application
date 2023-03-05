@@ -1,4 +1,3 @@
-import React from 'react';
 import {AddHeader} from '../parts/header';
 import "../css/productAdd.scss"
 import Form from '../parts/form';

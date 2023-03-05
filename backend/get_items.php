@@ -19,7 +19,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
     //get dvds
     $getDvdsSql = $conn->prepare("
-    SELECT sku, name, price, weight, length, width, height FROM items
+    SELECT sku, name, price, size, weight, length, width, height, type FROM items
     LEFT JOIN dvds ON items.id = dvds.id
     LEFT JOIN books ON items.id = books.id
     LEFT JOIN furnitures ON items.id = furnitures.id

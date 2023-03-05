@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import "../css/productAdd.scss"
 import { FormTypes, Values } from '../types/FormTypes';
 import ValidateForm from '../functions/Validators';
