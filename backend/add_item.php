@@ -27,7 +27,12 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
     $type = $data["type"];
 
+    $size = $data["size"];
+    $length = $data["length"];
+    $width = $data["width"];
+    $height = $data["height"];
     $weight = $data["weight"];
+
 
     //check if sku exists
     $checksql = $conn->prepare("
@@ -39,9 +44,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
     }
 
     //insert in DB if SKU is unique
-    $insertSql = $conn->prepare("
-    INSERT INTO items (sku, name, price, type) 
-    values (?, ?, ?, ?)");
+    $insertSql = $conn->prepare("INSERT INTO items (sku, name, price, type) values (?, ?, ?, ?)");
     $insertSql->execute([$sku, $name, $price, $type]);
 
 
@@ -53,11 +56,28 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
     $getId->execute();
     $id = mysqli_fetch_array($getId->get_result())[0];
 
+
+    //array containing all the queries for inputing into different tables
+    $insertSqls = array(
+        "dvd" => array(
+            "query" => "INSERT INTO dvds (id, size) values (?, ?)",
+            "values" => [$id, $size]
+        ),
+
+        "book" => array(
+            "query" => "INSERT INTO books (id, weight) values (?, ?)",
+            "values" => [$id, $weight]
+        ),
+
+        "furniture" => array(
+            "query" => "INSERT INTO furnitures (id, length, width, height) values (?, ?, ?, ?)",
+            "values" => [$id, $length, $width, $height]
+        )
+    );
+
     //insert it in db
-    $insertSql = $conn->prepare("
-    INSERT INTO books (id, weight) 
-    values (?, ?)");
-    $insertSql->execute([$id, $weight]);
+    $insertSql = $conn->prepare($insertSqls[$type]["query"]);
+    $insertSql->execute($insertSqls[$type]["values"]);
 
 
     $conn->close();

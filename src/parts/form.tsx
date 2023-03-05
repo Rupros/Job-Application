@@ -124,7 +124,7 @@ function Form() {
     }
 
     const handleSubmit = () => {
-        const url = `http://localhost/php-react/Job_Application/add_${formType}.php`;
+        const url = `http://localhost/php-react/Job_Application/add_item.php`;
         const formData = GetFormData(values, formType);
         
         axios.post(url, formData)
