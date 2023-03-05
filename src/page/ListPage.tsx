@@ -26,7 +26,7 @@ function ListPage() {
       <div className='center'>
         <div className='verticalBox'>
           <div className='grid'>
-
+            {}
           </div>
         </div>
       </div>
