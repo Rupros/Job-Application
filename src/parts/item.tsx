@@ -3,6 +3,7 @@ import "../css/item.scss"
 import DeleteSpecifc from '../functions/DeleteSpecific';
 import axios from 'axios';
 import GetInfo from '../functions/AdditionalInfo';
+import config from '../config';
 
 function Item({info}: {info: any}) {
   return (
@@ -27,7 +28,7 @@ function Items() {
   const [items, setItems] = useState([])
 
   useEffect(() => {
-    const url = `http://localhost/php-react/Job_Application/get_items.php`;
+    const url = `${config.url}/php-react/Job_Application/get_items.php`;
     
     axios.get(url)
     .then((response) => {
@@ -35,7 +36,7 @@ function Items() {
     }, (error) =>  {
         alert(`Error getting data! \n ${error}`);
     });
-  })
+  }, [])
 
   return (
     <>

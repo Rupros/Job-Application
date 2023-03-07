@@ -124,12 +124,13 @@ function Form() {
     }
 
     const handleSubmit = () => {
-        const url = `http://localhost/php-react/Job_Application/add_item.php`;
+        const url = `${config.url}/php-react/Job_Application/add_item.php`;
         const formData = GetFormData(values, formType);
         
         axios.post(url, formData)
         .then((res) => {
             console.log(res)
+            window.location.reload();
         }, (error) =>  {
             alert(`Error submitting form! \n ${error}`);
         });
