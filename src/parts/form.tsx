@@ -119,7 +119,6 @@ function Form() {
             setError("");
 
             handleSubmit();
-            returnToList();
         }
     }
 
@@ -130,7 +129,7 @@ function Form() {
         axios.post(url, formData)
         .then((res) => {
             console.log(res)
-            window.location.reload();
+            returnToList();
         }, (error) =>  {
             alert(`Error submitting form! \n ${error}`);
         });
