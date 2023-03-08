@@ -29,11 +29,11 @@ function AddInfo() {
 
         <div className='buttonList'>
             <button id='submit'>
-                SAVE
+                Save
             </button>
 
             <button onClick={ChangeRoute(config.listPath)}>
-                CANCEL
+                Cancel
             </button>
         </div>
     </>
